@@ -14,8 +14,8 @@
     - Expose a REST endpoint for creating a task
     - Back-end in-memory storage to store the task information
     - Abstraction for data storage, currently in-memory
-- [ ] Integration test to cover the new endpoint
-    - I can list all tasks
+    - Integration test to cover the new endpoint
+- [ ] I can list all tasks
     - Front-end page to display all tasks
     - Expose a REST endpoint for listing all tasks
     - Add functionality to the in-memory data store to list all tasks
