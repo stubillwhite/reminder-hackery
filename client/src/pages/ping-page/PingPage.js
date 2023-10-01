@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Grid, Header } from 'semantic-ui-react';
-import { pingServer } from '../../apis/StarterClient';
+import { pingServer } from '../../apis/Client';
 
 class PingPage extends React.Component {
 

@@ -10,7 +10,7 @@ plugins {
     id("org.jetbrains.kotlinx.kover") version "0.7.3"
 }
 
-group = "starter"
+group = "reminderhackery"
 version = "0.0.1"
 application {
     mainClass.set("io.ktor.server.netty.EngineMain")

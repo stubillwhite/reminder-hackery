@@ -14,6 +14,7 @@ help:
 .PHONY: clean
 clean: ## Remove all built artefacts
 	@echo 'Removing artefacts'
+	@gradle clean
 
 .PHONY: test
 test: ## Run tests
@@ -26,7 +27,7 @@ dist: test ## Build the distribution
 
 run: dist ## Build the distribution and run it
 	@echo 'Running application'
-	@java -jar ./build/libs/starter.server-all.jar
+	@java -jar ./build/libs/reminder-hackery-all.jar
 
 coverage: ## Run a test coverage report
 	@gradle koverHtmlReport

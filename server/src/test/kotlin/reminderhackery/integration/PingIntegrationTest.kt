@@ -1,12 +1,12 @@
-package org.starter.integration
+package reminderhackery.integration
 
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.server.testing.*
-import org.starter.model.Ping
-import org.starter.model.Pong
-import org.starter.testcommon.IntegrationTestBase
+import reminderhackery.model.Ping
+import reminderhackery.model.Pong
+import reminderhackery.testcommon.IntegrationTestBase
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

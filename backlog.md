@@ -9,8 +9,8 @@
     - Set up the front-end project
     - Display a web page allowing the front-end to ping the back-end
     - Decide whether I'm testing the front-end
-- [ ] I can create a new task with a name
-    - Front-end form to add a task with a name and submit it
+- [X] I can create a new task with a description
+    - Front-end form to add a task with a description and submit it
     - Expose a REST endpoint for creating a task
     - Back-end in-memory storage to store the task information
     - Abstraction for data storage, currently in-memory

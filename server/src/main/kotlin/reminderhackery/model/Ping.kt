@@ -1,9 +1,9 @@
-package org.starter.model
+package reminderhackery.model
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Pong(
+data class Ping(
     val message: String,
     val number: Int
 )

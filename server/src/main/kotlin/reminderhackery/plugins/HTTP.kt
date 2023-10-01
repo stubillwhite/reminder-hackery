@@ -1,4 +1,4 @@
-package org.starter.plugins
+package reminderhackery.plugins
 
 import io.ktor.http.*
 import io.ktor.server.application.*

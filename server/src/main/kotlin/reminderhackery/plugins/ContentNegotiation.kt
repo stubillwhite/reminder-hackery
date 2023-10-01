@@ -1,4 +1,4 @@
-package org.starter.plugins
+package reminderhackery.plugins
 
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*

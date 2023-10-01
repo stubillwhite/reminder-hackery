@@ -1,11 +1,12 @@
-package org.starter
+package reminderhackery
 
 import io.ktor.server.application.*
-import org.starter.apps.ComponentRegistry
-import org.starter.plugins.configureContentNegotation
-import org.starter.plugins.configureHTTP
-import org.starter.plugins.configureRouting
-import org.starter.utils.ConfigUtils.loadConfig
+import reminderhackery.persistence.TaskDAO
+import reminderhackery.plugins.configureContentNegotation
+import reminderhackery.plugins.configureHTTP
+import reminderhackery.plugins.configureRouting
+import reminderhackery.services.TaskService
+import reminderhackery.utils.ConfigUtils.loadConfig
 
 fun main(args: Array<String>): Unit =
     io.ktor.server.netty.EngineMain.main(args)
@@ -15,9 +16,9 @@ fun Application.module() {
     val appEnvironment = environment.config.propertyOrNull("app.environment")?.getString()
 
     val appConfig = loadConfig(appEnvironment)
-    val componentRegistry = ComponentRegistry(appConfig)
+    val taskService = TaskService(TaskDAO())
 
     configureHTTP()
-    configureRouting(componentRegistry)
+    configureRouting(taskService)
     configureContentNegotation()
 }

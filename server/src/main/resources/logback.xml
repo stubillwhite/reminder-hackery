@@ -2,13 +2,13 @@
 
     <appender name="appLogfileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <append>true</append>
-        <File>${logPath:- }starter-application.log</File>
+        <File>${logPath:- }reminder-hackery-application.log</File>
         <encoder>
             <pattern>%d [%-6p] %c - %m%n</pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
             <maxIndex>10</maxIndex>
-            <FileNamePattern>${logPath:- }starter-application.log.%i</FileNamePattern>
+            <FileNamePattern>${logPath:- }reminder-hackery-application.log.%i</FileNamePattern>
         </rollingPolicy>
         <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
             <MaxFileSize>10MB</MaxFileSize>
@@ -22,21 +22,21 @@
     </appender>
 
     <appender name="logfileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>${logPath:- }starter-all.log</File>
+        <File>${logPath:- }reminder-hackery-all.log</File>
         <append>true</append>
         <encoder>
             <pattern>%d [%-6p] %c - %m%n</pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
             <maxIndex>10</maxIndex>
-            <FileNamePattern>${logPath:- }starter-all.log.%i</FileNamePattern>
+            <FileNamePattern>${logPath:- }reminder-hackery-all.log.%i</FileNamePattern>
         </rollingPolicy>
         <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
             <MaxFileSize>10MB</MaxFileSize>
         </triggeringPolicy>
     </appender>
 
-    <logger name="org.starter" level="INFO">
+    <logger name="reminderhackery" level="INFO">
         <appender-ref ref="appLogfileAppender"/>
     </logger>
 

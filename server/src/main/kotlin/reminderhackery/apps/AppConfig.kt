@@ -1,4 +1,4 @@
-package org.starter.apps
+package reminderhackery.apps
 
 data class AppConfig(val dbUrl: String)
 

@@ -1,17 +1,19 @@
-package org.starter.plugins
+package reminderhackery.plugins
 
+import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.http.content.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlinx.serialization.ExperimentalSerializationApi
-import org.starter.apps.ComponentRegistry
-import org.starter.model.Ping
-import org.starter.model.Pong
+import reminderhackery.model.Ping
+import reminderhackery.model.Pong
+import reminderhackery.model.Task
+import reminderhackery.services.TaskService
 
 @OptIn(ExperimentalSerializationApi::class)
-fun Application.configureRouting(registry: ComponentRegistry) {
+fun Application.configureRouting(taskService: TaskService) {
 
     routing {
         staticResources("/", "web")
@@ -20,6 +22,13 @@ fun Application.configureRouting(registry: ComponentRegistry) {
             val ping = call.receive<Ping>()
             val pong = Pong(ping.message, ping.number)
             call.respond(pong)
+        }
+
+        post("/tasks") {
+            val task = call.receive<Task>()
+            val createdTask = taskService.createTask(task)
+            call.response.status(HttpStatusCode.Created)
+            call.respond(createdTask)
         }
     }
 }

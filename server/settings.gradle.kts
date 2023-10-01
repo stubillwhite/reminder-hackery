@@ -1,1 +1,1 @@
-rootProject.name = "starter.server"
+rootProject.name = "reminder-hackery"

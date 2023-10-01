@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const StarterClient = axios.create({
+const Client = axios.create({
     baseURL: 'http://localhost:8080',
 
     headers: {
@@ -9,7 +9,7 @@ const StarterClient = axios.create({
     }
 });
 
-StarterClient.interceptors.response.use(
+Client.interceptors.response.use(
     response => response,
     error => {
         console.log('ERROR:', error);
@@ -17,5 +17,9 @@ StarterClient.interceptors.response.use(
     });
 
 export const pingServer = async (ping) => {
-    return await StarterClient.post('ping', ping);
+    return await Client.post('ping', ping);
+};
+
+export const createTask = async (task) => {
+    return await Client.post('tasks', task);
 };

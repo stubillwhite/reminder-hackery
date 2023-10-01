@@ -1,4 +1,4 @@
-package org.starter.testcommon
+package reminderhackery.testcommon
 
 import io.ktor.client.*
 import io.ktor.client.plugins.contentnegotiation.*
