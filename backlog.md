@@ -1,0 +1,34 @@
+# Backlog #
+
+- [X] I have a back-end service
+    - Set up the back-end project
+    - Add a REST library
+    - Expose a REST healthcheck endpoint
+    - Integration test to cover the new endpoint
+- [X] I have a front-end service integrated with the back-end
+    - Set up the front-end project
+    - Display a web page allowing the front-end to ping the back-end
+    - Decide whether I'm testing the front-end
+- [ ] I can create a new task with a name
+    - Front-end form to add a task with a name and submit it
+    - Expose a REST endpoint for creating a task
+    - Back-end in-memory storage to store the task information
+    - Abstraction for data storage, currently in-memory
+- [ ] Integration test to cover the new endpoint
+    - I can list all tasks
+    - Front-end page to display all tasks
+    - Expose a REST endpoint for listing all tasks
+    - Add functionality to the in-memory data store to list all tasks
+    - Integration test to cover the new endpoint
+- [ ] Tasks have a due date
+    - Update the front-end to capture a due date
+    - Update the back-end to store the due date
+    - I can list all due tasks
+- [ ] Front-end page to display all tasks that are due
+    - Expose a REST endpoint for listing all due tasks
+    - Add functionality to the in-memory data store to list due tasks
+    - Integration test to cover the new endpoint
+- [ ] Task information is durable
+    - Add a database to the back-end and replace the in-memory store
+    - Add unit tests to cover the data store
+- ...
