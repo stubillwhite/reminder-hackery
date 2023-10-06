@@ -13,4 +13,9 @@ class TaskService(private val taskDAO: TaskDAO) {
         logger.info("Created task ${createdTask}")
         return createdTask
     }
+
+    fun getTasks(): List<Task> {
+        val tasks = taskDAO.getTasks()
+        return tasks
+    }
 }

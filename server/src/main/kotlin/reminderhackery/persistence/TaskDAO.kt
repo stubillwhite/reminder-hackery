@@ -18,6 +18,10 @@ class TaskDAO {
         return newTask
     }
 
+    fun getTasks(): List<Task> {
+        return tasks;
+    }
+
     private fun generateRandomId(): String {
         return UUID.randomUUID().toString()
     }

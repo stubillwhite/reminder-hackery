@@ -2,10 +2,12 @@ import React from 'react';
 import { Tab } from 'semantic-ui-react';
 import PingPage from './ping-page/PingPage';
 import CreatePage from './create-page/CreatePage';
+import TasksPage from './tasks-page/TasksPage';
 
 class MainPage extends React.Component {
 
     panes = [
+        { menuItem: 'Tasks', render: () => <Tab.Pane><TasksPage /></Tab.Pane> },
         { menuItem: 'Create', render: () => <Tab.Pane><CreatePage /></Tab.Pane> },
         { menuItem: 'Ping', render: () => <Tab.Pane><PingPage /></Tab.Pane> },
     ]
