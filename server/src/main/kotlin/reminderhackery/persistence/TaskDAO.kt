@@ -1,9 +1,17 @@
 package reminderhackery.persistence
 
+import kotliquery.HikariCP
+import kotliquery.LoanPattern.using
+import kotliquery.Row
+import kotliquery.queryOf
+import kotliquery.sessionOf
+import org.slf4j.LoggerFactory
 import reminderhackery.model.Task
 import java.util.*
 
-class TaskDAO {
+class TaskDAO(private val name: String) {
+
+    private val logger = LoggerFactory.getLogger(this.javaClass)
 
     private var tasks: List<Task> = listOf()
 
@@ -12,22 +20,61 @@ class TaskDAO {
             throw IllegalArgumentException("Attempting to create a task which already has an id ${task}")
         }
 
-        val newTask = task.copy(id = generateRandomId())
-        tasks += newTask
+        val id = UUID.randomUUID().toString()
 
-        return newTask
+        return using(sessionOf(HikariCP.dataSource(name))) { session ->
+            val sql = """
+                INSERT INTO tasks
+                  (id, description)
+                VALUES
+                  (?, ?)
+            """.trimIndent()
+
+            val (_, description) = task
+
+            session.run(queryOf(sql, id, description).asUpdate)
+
+            logger.info("Created task $task with ID $id")
+
+            task.copy(id = id)
+        }
     }
 
     fun updateTask(task: Task): Task {
-        tasks = tasks.map { if (task.id == it.id) task else it }
-        return task
+        return using(sessionOf(HikariCP.dataSource(name))) { session ->
+            val sql = """
+                UPDATE tasks
+                  SET description = ?
+                WHERE 
+                  id = ?
+            """.trimIndent()
+
+            val (id, description) = task
+
+            session.run(queryOf(sql, description, id).asUpdate)
+
+            logger.info("Update task $task")
+
+            task
+        }
     }
 
     fun getTasks(): List<Task> {
-        return tasks
+        return using(sessionOf(HikariCP.dataSource(name))) { session ->
+            val sql = """
+                SELECT
+                    *
+                FROM tasks
+            """.trimIndent()
+
+            session.run(queryOf(sql).map { extractTask(it) }.asList)
+        }
     }
 
-    private fun generateRandomId(): String {
-        return UUID.randomUUID().toString()
+    private fun extractTask(row: Row): Task {
+        return Task(
+            row.string("id"),
+            row.string("description")
+        )
     }
 }

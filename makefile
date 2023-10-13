@@ -53,5 +53,10 @@ server: client ## Build the server
 dist: client server ## Build a distribution
 
 .PHONY: run
-run: dist ## Build and run the distribution
+run: #dist ## Build and run the distribution
+	@echo 'Starting docker; remember to stop it later with:'
+	@echo '    pushd server && docker-compose downn && popd'
+	@pushd server \
+		&& docker-compose up -d
+	@sleep 5
 	@java -jar ./server/build/libs/reminder-hackery-all.jar

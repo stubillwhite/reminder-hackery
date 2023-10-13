@@ -1,6 +1,7 @@
 package reminderhackery
 
 import io.ktor.server.application.*
+import reminderhackery.persistence.RemindersDB
 import reminderhackery.persistence.TaskDAO
 import reminderhackery.plugins.configureContentNegotation
 import reminderhackery.plugins.configureHTTP
@@ -16,9 +17,12 @@ fun Application.module() {
     val appEnvironment = environment.config.propertyOrNull("app.environment")?.getString()
 
     val appConfig = loadConfig(appEnvironment)
-    val taskService = TaskService(TaskDAO())
+
+    RemindersDB.createBlankDatabase()
+    val taskService = TaskService(TaskDAO(RemindersDB.name))
 
     configureHTTP()
     configureRouting(taskService)
     configureContentNegotation()
+
 }
