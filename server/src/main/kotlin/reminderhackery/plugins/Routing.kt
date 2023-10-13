@@ -31,6 +31,14 @@ fun Application.configureRouting(taskService: TaskService) {
             call.respond(createdTask)
         }
 
+        put("/tasks") {
+            val task = call.receive<Task>()
+            val createdTask = taskService.updateTask(task)
+            call.response.status(HttpStatusCode.Created)
+            call.respond(createdTask)
+        }
+
+
         get("/tasks") {
             val tasks = taskService.getTasks()
             call.respond(tasks)

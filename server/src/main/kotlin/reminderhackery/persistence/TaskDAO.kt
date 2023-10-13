@@ -18,8 +18,13 @@ class TaskDAO {
         return newTask
     }
 
+    fun updateTask(task: Task): Task {
+        tasks = tasks.map { if (task.id == it.id) task else it }
+        return task
+    }
+
     fun getTasks(): List<Task> {
-        return tasks;
+        return tasks
     }
 
     private fun generateRandomId(): String {

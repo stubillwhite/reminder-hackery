@@ -54,4 +54,4 @@ dist: client server ## Build a distribution
 
 .PHONY: run
 run: dist ## Build and run the distribution
-	@java -jar ./server/build/libs/starter.server-all.jar
+	@java -jar ./server/build/libs/reminder-hackery-all.jar

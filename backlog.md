@@ -15,10 +15,15 @@
     - Back-end in-memory storage to store the task information
     - Abstraction for data storage, currently in-memory
     - Integration test to cover the new endpoint
-- [ ] I can list all tasks
+- [X] I can list all tasks
     - Front-end page to display all tasks
     - Expose a REST endpoint for listing all tasks
     - Add functionality to the in-memory data store to list all tasks
+    - Integration test to cover the new endpoint
+- [X] I can edit tasks
+    - Front-end allows me to select a task from the task list and edit the details
+    - Expose a REST endpoint for updating a task
+    - Add functionality to the in-memory data store to update a task
     - Integration test to cover the new endpoint
 - [ ] Tasks have a due date
     - Update the front-end to capture a due date

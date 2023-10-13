@@ -14,6 +14,12 @@ class TaskService(private val taskDAO: TaskDAO) {
         return createdTask
     }
 
+    fun updateTask(task: Task): Task {
+        val updatedTask = taskDAO.updateTask(task)
+        logger.info("Update task ${updatedTask}")
+        return updatedTask
+    }
+
     fun getTasks(): List<Task> {
         val tasks = taskDAO.getTasks()
         return tasks
