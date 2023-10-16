@@ -55,7 +55,7 @@ dist: client server ## Build a distribution
 .PHONY: run
 run: #dist ## Build and run the distribution
 	@echo 'Starting docker; remember to stop it later with:'
-	@echo '    pushd server && docker-compose downn && popd'
+	@echo '    pushd server && docker-compose down && popd'
 	@pushd server \
 		&& docker-compose up -d
 	@sleep 5
