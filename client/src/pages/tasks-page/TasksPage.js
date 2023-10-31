@@ -25,7 +25,7 @@ const TaskList = (props) => {
 
 const TasksPage = () => {
 
-    const blankTask = { id: null, description: '' };
+    const blankTask = { id: null, description: '', deadline: ''};
 
     const [tasks, setTasks] = useState([]);
     const [selectedTask, setSelectedTask] = useState(null);

@@ -20,6 +20,7 @@ class RemindersDB {
             val flyway =
                 Flyway
                     .configure()
+                    .loggers("slf4j")
                     .locations("db")
                     .createSchemas(true)
                     .cleanDisabled(false)

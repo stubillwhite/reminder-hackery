@@ -38,7 +38,6 @@ fun Application.configureRouting(taskService: TaskService) {
             call.respond(createdTask)
         }
 
-
         get("/tasks") {
             val tasks = taskService.getTasks()
             call.respond(tasks)

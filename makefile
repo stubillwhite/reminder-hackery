@@ -12,6 +12,8 @@ COLOR_CLEAR_LINE=\r\033[K
 CLIENT=client
 SERVER=server
 
+GRADLE=./gradlew
+
 # Targets
 
 .PHONY: help
@@ -29,7 +31,7 @@ clean: ## Remove all built artefacts
 		&& make clean \
 		&& popd
 	@pushd "${SERVER}" \
-		&& gradle clean \
+		&& $(GRADLE) clean \
 		&& rm -rf out \
 		&& popd
 
@@ -53,7 +55,7 @@ server: client ## Build the server
 dist: client server ## Build a distribution
 
 .PHONY: run
-run: #dist ## Build and run the distribution
+run: dist ## Build and run the distribution
 	@echo 'Starting docker; remember to stop it later with:'
 	@echo '    pushd server && docker-compose down && popd'
 	@pushd server \

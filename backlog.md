@@ -25,7 +25,7 @@
     - Expose a REST endpoint for updating a task
     - Add functionality to the in-memory data store to update a task
     - Integration test to cover the new endpoint
-- [ ] Tasks have a due date
+- [X] Tasks have a due date
     - Update the front-end to capture a due date
     - Update the back-end to store the due date
     - I can list all due tasks

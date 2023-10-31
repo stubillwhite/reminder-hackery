@@ -3,6 +3,8 @@
 COLOR_BLUE=\033[0;34m
 COLOR_NONE=\033[0m
 
+GRADLE=./gradlew
+
 # Targets
 
 help:
@@ -14,22 +16,22 @@ help:
 .PHONY: clean
 clean: ## Remove all built artefacts
 	@echo 'Removing artefacts'
-	@gradle clean
+	@$(GRADLE) clean
 
 .PHONY: test
 test: ## Run tests
 	@echo 'Running tests'
-	@gradle test
+	@$(GRADLE) test
 
 dist: test ## Build the distribution
 	@echo 'Building the distribution'
-	@gradle shadowJar
+	@$(GRADLE) shadowJar
 
 run: dist ## Build the distribution and run it
 	@echo 'Running application'
 	@java -jar ./build/libs/reminder-hackery-all.jar
 
 coverage: ## Run a test coverage report
-	@gradle koverHtmlReport
+	@$(GRADLE) koverHtmlReport
 	@open './build/reports/kover/html/index.html'
 

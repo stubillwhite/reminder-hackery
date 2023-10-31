@@ -7,13 +7,12 @@ import kotliquery.queryOf
 import kotliquery.sessionOf
 import org.slf4j.LoggerFactory
 import reminderhackery.model.Task
+import java.time.ZoneOffset
 import java.util.*
 
 class TaskDAO(private val name: String) {
 
     private val logger = LoggerFactory.getLogger(this.javaClass)
-
-    private var tasks: List<Task> = listOf()
 
     fun createTask(task: Task): Task {
         if (task.id != null) {
@@ -25,14 +24,14 @@ class TaskDAO(private val name: String) {
         return using(sessionOf(HikariCP.dataSource(name))) { session ->
             val sql = """
                 INSERT INTO tasks
-                  (id, description)
+                  (id, description, deadline)
                 VALUES
-                  (?, ?)
+                  (?, ?, ?)
             """.trimIndent()
 
-            val (_, description) = task
+            val (_, description, deadline) = task
 
-            session.run(queryOf(sql, id, description).asUpdate)
+            session.run(queryOf(sql, id, description, deadline.toOffsetDateTime()).asUpdate)
 
             logger.info("Created task $task with ID $id")
 
@@ -44,14 +43,14 @@ class TaskDAO(private val name: String) {
         return using(sessionOf(HikariCP.dataSource(name))) { session ->
             val sql = """
                 UPDATE tasks
-                  SET description = ?
+                  SET description = ?, deadline = ?
                 WHERE 
                   id = ?
             """.trimIndent()
 
-            val (id, description) = task
+            val (id, description, deadline) = task
 
-            session.run(queryOf(sql, description, id).asUpdate)
+            session.run(queryOf(sql, description, deadline.toOffsetDateTime(), id).asUpdate)
 
             logger.info("Update task $task")
 
@@ -74,7 +73,8 @@ class TaskDAO(private val name: String) {
     private fun extractTask(row: Row): Task {
         return Task(
             row.string("id"),
-            row.string("description")
+            row.string("description"),
+            row.offsetDateTime("deadline").atZoneSameInstant(ZoneOffset.UTC)
         )
     }
 }

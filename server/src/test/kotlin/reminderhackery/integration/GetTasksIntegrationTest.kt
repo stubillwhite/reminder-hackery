@@ -6,6 +6,8 @@ import io.ktor.http.*
 import io.ktor.server.testing.*
 import reminderhackery.model.Task
 import reminderhackery.testcommon.IntegrationTestBase
+import reminderhackery.testcommon.StubData.dateOf
+import reminderhackery.testcommon.StubData.dateTimeOf
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -18,7 +20,7 @@ class GetTasksIntegrationTest : IntegrationTestBase() {
             // Given
             val client = httpClient()
 
-            val task = Task(null, "task-description")
+            val task = Task(null, "task-description", dateTimeOf("2022-01-02T03:04:05.000Z"))
 
             val createTaskResponse = client.post("/tasks") {
                 contentType(ContentType.Application.Json)
