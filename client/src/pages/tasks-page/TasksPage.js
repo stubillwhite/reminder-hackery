@@ -10,7 +10,7 @@ const TaskList = (props) => {
     }
 
     return props.tasks.map(task => {
-        const formatDate = (date) => new Date(date).toLocaleDateString('en-US')
+        const formatDate = (date) => new Date(date).toLocaleDateString('en-GB')
 
         return (
             <Card key={task.id}>
