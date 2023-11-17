@@ -8,6 +8,7 @@ import kotliquery.sessionOf
 import org.slf4j.LoggerFactory
 import reminderhackery.model.Task
 import java.time.ZoneOffset
+import java.time.ZonedDateTime
 import java.util.*
 
 class TaskDAO(private val name: String) {
@@ -62,11 +63,25 @@ class TaskDAO(private val name: String) {
         return using(sessionOf(HikariCP.dataSource(name))) { session ->
             val sql = """
                 SELECT
-                    *
+                  *
                 FROM tasks
             """.trimIndent()
 
             session.run(queryOf(sql).map { extractTask(it) }.asList)
+        }
+    }
+
+    fun getDueTasks(dateTime: ZonedDateTime): List<Task> {
+        return using(sessionOf(HikariCP.dataSource(name))) { session ->
+            val sql = """
+                SELECT
+                  *
+                FROM tasks
+                WHERE 
+                  deadline <= ?
+            """.trimIndent()
+
+            session.run(queryOf(sql, dateTime).map { extractTask(it) }.asList)
         }
     }
 

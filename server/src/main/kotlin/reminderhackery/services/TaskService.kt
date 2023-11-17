@@ -3,6 +3,7 @@ package reminderhackery.services
 import org.slf4j.LoggerFactory
 import reminderhackery.model.Task
 import reminderhackery.persistence.TaskDAO
+import reminderhackery.utils.TemporalUtils.dateTimeNow
 
 class TaskService(private val taskDAO: TaskDAO) {
 
@@ -21,7 +22,10 @@ class TaskService(private val taskDAO: TaskDAO) {
     }
 
     fun getTasks(): List<Task> {
-        val tasks = taskDAO.getTasks()
-        return tasks
+        return taskDAO.getTasks()
+    }
+
+    fun getDueTasks(): List<Task> {
+        return taskDAO.getDueTasks(dateTimeNow())
     }
 }

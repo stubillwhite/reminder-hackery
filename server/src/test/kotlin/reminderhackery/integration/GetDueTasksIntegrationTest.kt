@@ -6,20 +6,21 @@ import io.ktor.http.*
 import io.ktor.server.testing.*
 import reminderhackery.model.Task
 import reminderhackery.testcommon.IntegrationTestBase
+import reminderhackery.testcommon.StubData.dateOf
 import reminderhackery.testcommon.StubData.dateTimeOf
-import reminderhackery.utils.TemporalUtils
+import reminderhackery.utils.TemporalUtils.dateTimeNow
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
-class GetTasksIntegrationTest : IntegrationTestBase() {
+class GetDueTasksIntegrationTest : IntegrationTestBase() {
 
-    private val today = TemporalUtils.dateTimeNow()
+    private val today = dateTimeNow()
     private val yesterday = today.minusDays(1)
     private val tomorrow = today.plusDays(1)
 
     @Test
-    fun getTasksThenReturnsTasksResponse() {
+    fun getDueTasksThenReturnsTasksDueNow() {
         testApplication {
             // Given
             val client = httpClient()
@@ -39,13 +40,13 @@ class GetTasksIntegrationTest : IntegrationTestBase() {
             }
 
             // When
-            val getTasksResponse = client.get("/tasks") {
+            val getTasksResponse = client.get("/tasks/due") {
                 contentType(ContentType.Application.Json)
             }
 
             // Then
             val response: List<Task> = getTasksResponse.body()
-            assertEquals(3, response.size)
+            assertEquals(2, response.size)
 
             tasks.zip(response).forEach { (expected, actual) ->
                 assertEquals(expected.description, actual.description)

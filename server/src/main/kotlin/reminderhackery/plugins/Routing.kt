@@ -42,5 +42,10 @@ fun Application.configureRouting(taskService: TaskService) {
             val tasks = taskService.getTasks()
             call.respond(tasks)
         }
+
+        get("/tasks/due") {
+            val tasks = taskService.getDueTasks()
+            call.respond(tasks)
+        }
     }
 }

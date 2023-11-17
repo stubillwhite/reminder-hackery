@@ -25,15 +25,22 @@
     - Expose a REST endpoint for updating a task
     - Add functionality to the in-memory data store to update a task
     - Integration test to cover the new endpoint
+- [X] Task information is durable
+    - Add a database to the back-end and replace the in-memory store
+    - Add unit tests to cover the data store
 - [X] Tasks have a due date
     - Update the front-end to capture a due date
     - Update the back-end to store the due date
-    - I can list all due tasks
 - [ ] Front-end page to display all tasks that are due
     - Expose a REST endpoint for listing all due tasks
-    - Add functionality to the in-memory data store to list due tasks
+    - Add functionality to the data store to list due tasks
     - Integration test to cover the new endpoint
-- [ ] Task information is durable
-    - Add a database to the back-end and replace the in-memory store
-    - Add unit tests to cover the data store
+- [ ] Tasks have a completion status
+    - Update the front-end to display whether a task is incomplete or complete
+    - Update the back-end to store the completion status
+- [ ] Tasks have a recurrence period
+    - Update the front-end to capture an optional recurrence period of N days
+    - Update the back-end to store the recurrence period
+- [ ] Completing a recurring task spawns a new occurence of that task
+    - Update the back-end to recur a task if it is marked as complete and has a recurrence period
 - ...

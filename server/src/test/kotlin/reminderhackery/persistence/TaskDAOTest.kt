@@ -65,17 +65,43 @@ class TaskDAOTest {
     @Test
     fun getTasksThenReturnsTasks() {
         // Given
-        getTaskDAO().createTask(Task(null, "task-1", yesterday))
-        getTaskDAO().createTask(Task(null, "task-2", today))
-        getTaskDAO().createTask(Task(null, "task-3", tomorrow))
+        val tasks = listOf(
+            Task(null, "task-1", yesterday),
+            Task(null, "task-2", today),
+            Task(null, "task-3", tomorrow),
+        )
+        tasks.forEach { task -> getTaskDAO().createTask(task) }
 
         // When
-        val tasks = getTaskDAO().getTasks()
+        val actual = getTaskDAO().getTasks()
 
         // Then
-        assertEquals(3, tasks.size)
-        assertContentEquals(listOf("task-1", "task-2", "task-3"), tasks.map { it.description })
-        assertContentEquals(listOf(yesterday, today, tomorrow), tasks.map { it.deadline })
+        assertEquals(3, actual.size)
+        tasks.zip(actual).forEach { (expected, actual) ->
+            assertEquals(expected.description, actual.description)
+            assertEquals(expected.deadline, actual.deadline)
+        }
+    }
+
+    @Test
+    fun getTasksThenReturnsTasksWithDeadlineBeforeNow() {
+        // Given
+        val tasks = listOf(
+            Task(null, "task-1", yesterday),
+            Task(null, "task-2", today),
+            Task(null, "task-3", tomorrow),
+        )
+        tasks.forEach { task -> getTaskDAO().createTask(task) }
+
+        // When
+        val actual = getTaskDAO().getDueTasks(today)
+
+        // Then
+        assertEquals(2, actual.size)
+        tasks.zip(actual).forEach { (expected, actual) ->
+            assertEquals(expected.description, actual.description)
+            assertEquals(expected.deadline, actual.deadline)
+        }
     }
 
     private fun getTaskDAO(): TaskDAO {
