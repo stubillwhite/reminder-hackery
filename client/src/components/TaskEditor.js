@@ -1,8 +1,8 @@
 
 import React from 'react';
-import { Button, Form, Modal } from 'semantic-ui-react';
 import SemanticDatepicker from 'react-semantic-ui-datepickers';
 import 'react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css';
+import { Button, Form, Modal } from 'semantic-ui-react';
 
 const Task = (props) => {
 
@@ -23,8 +23,11 @@ const Task = (props) => {
             </Form.Field>
             <Form.Field>
                 <label>Deadline</label>
-                <SemanticDatepicker onChange={(e, data) => onChangeProperty('deadline', data.value)} />
+                <SemanticDatepicker
+                    value={new Date(task.deadline)}
+                    onChange={(e, data) => onChangeProperty('deadline', data.value)} />
             </Form.Field>
+            <div />
         </Form>
     );
 };
@@ -46,7 +49,7 @@ const TaskEditor = (props) => {
                         task={task}
                         onChangeProperty={props.onChangeProperty} />
                     <Button onClick={props.onSaveChanges}>OK</Button>
-                    <pre>{JSON.stringify(task, null, 2)}</pre>
+                    {/* <pre>{JSON.stringify(task, null, 2)}</pre> */}
                 </Modal.Content>
             </Modal>
         );

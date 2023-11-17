@@ -28,6 +28,10 @@ export const updateTask = async (task) => {
     return await Client.put('tasks', task);
 };
 
-export const getTasks = async () => {
+export const getAllTasks = async () => {
     return await Client.get('tasks');
+};
+
+export const getDueTasks = async () => {
+    return await Client.get('tasks/due');
 };

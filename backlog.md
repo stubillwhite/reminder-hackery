@@ -31,7 +31,7 @@
 - [X] Tasks have a due date
     - Update the front-end to capture a due date
     - Update the back-end to store the due date
-- [ ] Front-end page to display all tasks that are due
+- [X] Front-end page to display all tasks that are due
     - Expose a REST endpoint for listing all due tasks
     - Add functionality to the data store to list due tasks
     - Integration test to cover the new endpoint
