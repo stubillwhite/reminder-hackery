@@ -16,7 +16,7 @@ class TaskService(private val taskDAO: TaskDAO) {
     }
 
     fun updateTask(task: Task): Task {
-        val updatedTask = taskDAO.updateTask(task)
+        val updatedTask = taskDAO.updateTask(amendDeadlineIfRecurringTaskCompleted(task))
         logger.info("Updated task ${updatedTask}")
         return updatedTask
     }
@@ -27,5 +27,15 @@ class TaskService(private val taskDAO: TaskDAO) {
 
     fun getDueTasks(): List<Task> {
         return taskDAO.getDueTasks(dateTimeNow())
+    }
+
+    private fun amendDeadlineIfRecurringTaskCompleted(task: Task): Task {
+        if (task.recurrence != null && task.complete) {
+            val newDeadline = task.deadline.plusDays(task.recurrence.toLong())
+            return task.copy(deadline = newDeadline, complete = false)
+        }
+        else {
+            return task
+        }
     }
 }

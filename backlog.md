@@ -41,6 +41,6 @@
 - [X] Tasks have a recurrence period
     - Update the front-end to capture an optional recurrence period of N days
     - Update the back-end to store the recurrence period
-- [ ] Completing a recurring task spawns a new occurence of that task
+- [X] Completing a recurring task spawns a new occurence of that task
     - Update the back-end to recur a task if it is marked as complete and has a recurrence period
 - ...

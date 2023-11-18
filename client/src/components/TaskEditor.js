@@ -64,7 +64,7 @@ const TaskEditor = (props) => {
                         task={task}
                         onChangeProperty={props.onChangeProperty} />
                     <Button onClick={props.onSaveChanges}>OK</Button>
-                    <pre>{JSON.stringify(task, null, 2)}</pre>
+                    {/* <pre>{JSON.stringify(task, null, 2)}</pre> */}
                 </Modal.Content>
             </Modal>
         );

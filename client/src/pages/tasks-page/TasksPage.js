@@ -84,6 +84,7 @@ const TasksPage = () => {
         }
 
         setSelectedTask(null);
+        onSelectTaskFilter(taskFilter);
     }
 
     return (
