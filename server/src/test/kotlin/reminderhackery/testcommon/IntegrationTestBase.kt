@@ -7,22 +7,19 @@ import io.ktor.server.testing.*
 import kotlinx.serialization.json.Json
 import org.testcontainers.containers.DockerComposeContainer
 import reminderhackery.persistence.RemindersDB
-import reminderhackery.persistence.TaskDAO
 import java.io.File
-import kotlin.test.*
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
 
 open class IntegrationTestBase {
 
     private val container = DockerComposeContainer(File("docker-compose.yml"))
         .withExposedService("postgres", 5432)
 
-    private var taskDAO: TaskDAO? = null
-
     @BeforeTest
     fun beforeAll() {
         container.start()
         RemindersDB.createBlankDatabase()
-        taskDAO = TaskDAO("remindersdb")
     }
 
     @AfterTest
