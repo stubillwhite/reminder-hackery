@@ -3,6 +3,7 @@ package reminderhackery.persistence
 import org.testcontainers.containers.DockerComposeContainer
 import reminderhackery.model.Task
 import reminderhackery.testcommon.StubData.dateTimeOf
+import reminderhackery.testcommon.assertTaskFieldsEqual
 import java.io.File
 import kotlin.test.*
 
@@ -32,7 +33,7 @@ class TaskDAOTest {
     @Test
     fun createTaskThenCreatesNewTask() {
         // Given
-        val task = Task(null, "task-description", today, false)
+        val task = Task(null, "task-description", today, false, 1)
 
         // When
         getTaskDAO().createTask(task)
@@ -41,22 +42,20 @@ class TaskDAOTest {
         val tasks = getTaskDAO().getTasks()
         assertEquals(1, tasks.size)
         val actual = tasks[0]
-        assertNotNull(actual.id)
-        assertEquals(task.description, actual.description)
-        assertEquals(task.deadline, actual.deadline)
-        assertEquals(task.complete, actual.complete)
+        assertTaskFieldsEqual(task, actual)
     }
 
     @Test
     fun updateTaskThenUpdatesTask() {
         // Given
-        val task = getTaskDAO().createTask(Task(null, "task-description", today, false))
+        val task = getTaskDAO().createTask(Task(null, "task-description", today, false, null))
         val expectedDescription = "updated-task-description"
         val expectedDeadline = tomorrow
         val expectedComplete = true
+        val expectedRecurrence = 1
 
         // When
-        getTaskDAO().updateTask(task.copy(description = expectedDescription, deadline = expectedDeadline, complete = expectedComplete))
+        getTaskDAO().updateTask(task.copy(description = expectedDescription, deadline = expectedDeadline, complete = expectedComplete, recurrence = expectedRecurrence))
 
         // Then
         val tasks = getTaskDAO().getTasks()
@@ -65,15 +64,16 @@ class TaskDAOTest {
         assertEquals(expectedDescription, actual.description)
         assertEquals(expectedDeadline, actual.deadline)
         assertEquals(expectedComplete, actual.complete)
+        assertEquals(expectedRecurrence, actual.recurrence)
     }
 
     @Test
     fun getTasksThenReturnsTasks() {
         // Given
         val tasks = listOf(
-            Task(null, "task-1", yesterday, true),
-            Task(null, "task-2", today, false),
-            Task(null, "task-3", tomorrow, false),
+            Task(null, "task-1", yesterday, true, null),
+            Task(null, "task-2", today, false, 1),
+            Task(null, "task-3", tomorrow, false, 2),
         )
         tasks.forEach { task -> getTaskDAO().createTask(task) }
 
@@ -83,9 +83,7 @@ class TaskDAOTest {
         // Then
         assertEquals(3, actual.size)
         tasks.zip(actual).forEach { (expected, actual) ->
-            assertEquals(expected.description, actual.description)
-            assertEquals(expected.deadline, actual.deadline)
-            assertEquals(expected.complete, actual.complete)
+            assertTaskFieldsEqual(expected, actual)
         }
     }
 
@@ -93,9 +91,9 @@ class TaskDAOTest {
     fun getTasksThenReturnsTasksWithDeadlineBeforeNow() {
         // Given
         val tasks = listOf(
-            Task(null, "task-1", yesterday, false),
-            Task(null, "task-2", today, false),
-            Task(null, "task-3", tomorrow, false),
+            Task(null, "task-1", yesterday, false, null),
+            Task(null, "task-2", today, false, 1),
+            Task(null, "task-3", tomorrow, false, 2),
         )
         tasks.forEach { task -> getTaskDAO().createTask(task) }
 
@@ -105,9 +103,7 @@ class TaskDAOTest {
         // Then
         assertEquals(2, actual.size)
         tasks.zip(actual).forEach { (expected, actual) ->
-            assertEquals(expected.description, actual.description)
-            assertEquals(expected.deadline, actual.deadline)
-            assertEquals(expected.complete, actual.complete)
+            assertTaskFieldsEqual(expected, actual)
         }
     }
 

@@ -7,6 +7,7 @@ import io.ktor.server.testing.*
 import reminderhackery.model.Task
 import reminderhackery.testcommon.IntegrationTestBase
 import reminderhackery.testcommon.StubData.dateTimeOf
+import reminderhackery.testcommon.assertTaskFieldsEqual
 import reminderhackery.utils.TemporalUtils
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -25,9 +26,9 @@ class GetTasksIntegrationTest : IntegrationTestBase() {
             val client = httpClient()
 
             val tasks = listOf(
-                Task(null, "task-description", yesterday, false),
-                Task(null, "task-description", today, false),
-                Task(null, "task-description", tomorrow, false)
+                Task(null, "task-description", yesterday, false, null),
+                Task(null, "task-description", today, false, 1),
+                Task(null, "task-description", tomorrow, false, 2)
             )
 
             tasks.forEach { task ->
@@ -48,9 +49,7 @@ class GetTasksIntegrationTest : IntegrationTestBase() {
             assertEquals(3, response.size)
 
             tasks.zip(response).forEach { (expected, actual) ->
-                assertEquals(expected.description, actual.description)
-                assertEquals(expected.deadline, actual.deadline)
-                assertNotNull(actual.id)
+                assertTaskFieldsEqual(expected, actual)
             }
         }
     }

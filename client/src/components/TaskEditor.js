@@ -12,6 +12,8 @@ const Task = (props) => {
 
     const { task } = props;
 
+    const convertEmptyToNull = (s) => s ? s : null;
+
     return (
         <Form onSubmit={props.onSaveChanges}>
             <Form.Field>
@@ -32,6 +34,13 @@ const Task = (props) => {
                 <Checkbox
                     checked={task.complete}
                     onChange={(e, data) => onChangeProperty('complete', data.checked)} />
+            </Form.Field>
+            <Form.Field>
+                <label>Recurrence in days</label>
+                <input
+                    placeholder=''
+                    value={task.recurrence}
+                    onChange={(e) => onChangeProperty('recurrence', convertEmptyToNull(e.target.value))} />
             </Form.Field>
             <div />
         </Form>
@@ -55,7 +64,7 @@ const TaskEditor = (props) => {
                         task={task}
                         onChangeProperty={props.onChangeProperty} />
                     <Button onClick={props.onSaveChanges}>OK</Button>
-                    {/* <pre>{JSON.stringify(task, null, 2)}</pre> */}
+                    <pre>{JSON.stringify(task, null, 2)}</pre>
                 </Modal.Content>
             </Modal>
         );

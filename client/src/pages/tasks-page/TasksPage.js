@@ -29,7 +29,7 @@ const TaskList = (props) => {
 
 const TasksPage = () => {
 
-    const blankTask = { id: null, description: '', deadline: new Date(), complete: false };
+    const blankTask = { id: null, description: '', deadline: new Date(), complete: false, recurrence: null };
 
     const TaskFilter = {
         All: 'All',

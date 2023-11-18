@@ -6,10 +6,10 @@ import io.ktor.http.*
 import io.ktor.server.testing.*
 import reminderhackery.model.Task
 import reminderhackery.testcommon.IntegrationTestBase
+import reminderhackery.testcommon.assertTaskFieldsEqual
 import reminderhackery.utils.TemporalUtils.dateTimeNow
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
 
 class TaskCreationIntegrationTest : IntegrationTestBase() {
 
@@ -19,17 +19,16 @@ class TaskCreationIntegrationTest : IntegrationTestBase() {
 
             val client = httpClient()
 
-            val task = Task(null, "task-description", dateTimeNow(), false)
+            val expected = Task(null, "task-description", dateTimeNow(), false, null)
 
             val response = client.post("/tasks") {
                 contentType(ContentType.Application.Json)
-                setBody(task)
+                setBody(expected)
             }
             assertEquals(HttpStatusCode.Created, response.status)
 
             val actual: Task = response.body()
-            assertNotNull(actual.id)
-            assertEquals(task.description, actual.description)
+            assertTaskFieldsEqual(expected, actual)
         }
     }
 }

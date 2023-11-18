@@ -38,7 +38,7 @@
 - [X] Tasks have a completion status
     - Update the front-end to display whether a task is incomplete or complete
     - Update the back-end to store the completion status
-- [ ] Tasks have a recurrence period
+- [X] Tasks have a recurrence period
     - Update the front-end to capture an optional recurrence period of N days
     - Update the back-end to store the recurrence period
 - [ ] Completing a recurring task spawns a new occurence of that task

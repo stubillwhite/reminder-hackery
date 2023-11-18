@@ -23,14 +23,14 @@ class TaskDAO(private val name: String) {
         return using(sessionOf(HikariCP.dataSource(name))) { session ->
             val sql = """
                 INSERT INTO tasks
-                  (id, description, deadline, complete)
+                  (id, description, deadline, complete, recurrence)
                 VALUES
-                  (?, ?, ?, ?)
+                  (?, ?, ?, ?, ?)
             """.trimIndent()
 
-            val (_, description, deadline, complete) = task
+            val (_, description, deadline, complete, recurrence) = task
 
-            session.run(queryOf(sql, id, description, deadline.toOffsetDateTime(), complete).asUpdate)
+            session.run(queryOf(sql, id, description, deadline.toOffsetDateTime(), complete, recurrence).asUpdate)
 
             task.copy(id = id)
         }
@@ -40,14 +40,14 @@ class TaskDAO(private val name: String) {
         return using(sessionOf(HikariCP.dataSource(name))) { session ->
             val sql = """
                 UPDATE tasks
-                  SET description = ?, deadline = ?, complete = ?
+                  SET description = ?, deadline = ?, complete = ?, recurrence = ?
                 WHERE 
                   id = ?
             """.trimIndent()
 
-            val (id, description, deadline, complete) = task
+            val (id, description, deadline, complete, recurrence) = task
 
-            session.run(queryOf(sql, description, deadline.toOffsetDateTime(), complete, id).asUpdate)
+            session.run(queryOf(sql, description, deadline.toOffsetDateTime(), complete, recurrence, id).asUpdate)
 
             task
         }
@@ -84,7 +84,8 @@ class TaskDAO(private val name: String) {
             row.string("id"),
             row.string("description"),
             row.offsetDateTime("deadline").atZoneSameInstant(ZoneOffset.UTC),
-            row.boolean("complete")
+            row.boolean("complete"),
+            row.intOrNull("recurrence")
         )
     }
 }

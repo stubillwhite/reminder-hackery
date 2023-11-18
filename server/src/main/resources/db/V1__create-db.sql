@@ -5,5 +5,6 @@ CREATE TABLE tasks (
   description VARCHAR(255) NOT NULL,
   deadline TIMESTAMP WITH TIME ZONE NOT NULL,
   complete BOOLEAN NOT NULL,
+  recurrence INT,
   PRIMARY KEY (id)
 );

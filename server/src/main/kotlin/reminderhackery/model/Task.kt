@@ -13,5 +13,7 @@ data class Task(
     @Serializable(with = StringEncodedUTCDateTimeSerializer::class)
     val deadline: ZonedDateTime,
 
-    val complete: Boolean
+    val complete: Boolean,
+
+    val recurrence: Int?
 )
