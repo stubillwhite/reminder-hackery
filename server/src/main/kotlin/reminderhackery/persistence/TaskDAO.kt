@@ -13,8 +13,6 @@ import java.util.*
 
 class TaskDAO(private val name: String) {
 
-    private val logger = LoggerFactory.getLogger(this.javaClass)
-
     fun createTask(task: Task): Task {
         if (task.id != null) {
             throw IllegalArgumentException("Attempting to create a task which already has an id ${task}")
@@ -34,8 +32,6 @@ class TaskDAO(private val name: String) {
 
             session.run(queryOf(sql, id, description, deadline.toOffsetDateTime(), complete).asUpdate)
 
-            logger.info("Created task $task with ID $id")
-
             task.copy(id = id)
         }
     }
@@ -52,8 +48,6 @@ class TaskDAO(private val name: String) {
             val (id, description, deadline, complete) = task
 
             session.run(queryOf(sql, description, deadline.toOffsetDateTime(), complete, id).asUpdate)
-
-            logger.info("Update task $task")
 
             task
         }

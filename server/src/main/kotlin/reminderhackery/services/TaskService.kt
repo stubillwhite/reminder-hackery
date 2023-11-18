@@ -17,7 +17,7 @@ class TaskService(private val taskDAO: TaskDAO) {
 
     fun updateTask(task: Task): Task {
         val updatedTask = taskDAO.updateTask(task)
-        logger.info("Update task ${updatedTask}")
+        logger.info("Updated task ${updatedTask}")
         return updatedTask
     }
 
