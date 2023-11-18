@@ -35,7 +35,7 @@
     - Expose a REST endpoint for listing all due tasks
     - Add functionality to the data store to list due tasks
     - Integration test to cover the new endpoint
-- [ ] Tasks have a completion status
+- [X] Tasks have a completion status
     - Update the front-end to display whether a task is incomplete or complete
     - Update the back-end to store the completion status
 - [ ] Tasks have a recurrence period

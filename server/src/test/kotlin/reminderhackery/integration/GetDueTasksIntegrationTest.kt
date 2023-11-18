@@ -26,9 +26,9 @@ class GetDueTasksIntegrationTest : IntegrationTestBase() {
             val client = httpClient()
 
             val tasks = listOf(
-                Task(null, "task-description", yesterday),
-                Task(null, "task-description", today),
-                Task(null, "task-description", tomorrow)
+                Task(null, "task-description", yesterday, false),
+                Task(null, "task-description", today, false),
+                Task(null, "task-description", tomorrow, false)
             )
 
             tasks.forEach { task ->

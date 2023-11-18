@@ -32,7 +32,7 @@ class TaskDAOTest {
     @Test
     fun createTaskThenCreatesNewTask() {
         // Given
-        val task = Task(null, "task-description", today)
+        val task = Task(null, "task-description", today, false)
 
         // When
         getTaskDAO().createTask(task)
@@ -40,35 +40,40 @@ class TaskDAOTest {
         // Then
         val tasks = getTaskDAO().getTasks()
         assertEquals(1, tasks.size)
-        assertNotNull(tasks[0].id)
-        assertEquals(task.description, tasks[0].description)
-        assertEquals(task.deadline, tasks[0].deadline)
+        val actual = tasks[0]
+        assertNotNull(actual.id)
+        assertEquals(task.description, actual.description)
+        assertEquals(task.deadline, actual.deadline)
+        assertEquals(task.complete, actual.complete)
     }
 
     @Test
     fun updateTaskThenUpdatesTask() {
         // Given
-        val task = getTaskDAO().createTask(Task(null, "task-description", today))
+        val task = getTaskDAO().createTask(Task(null, "task-description", today, false))
         val expectedDescription = "updated-task-description"
         val expectedDeadline = tomorrow
+        val expectedComplete = true
 
         // When
-        getTaskDAO().updateTask(task.copy(description = expectedDescription, deadline = expectedDeadline))
+        getTaskDAO().updateTask(task.copy(description = expectedDescription, deadline = expectedDeadline, complete = expectedComplete))
 
         // Then
         val tasks = getTaskDAO().getTasks()
         assertEquals(1, tasks.size)
-        assertEquals(expectedDescription, tasks[0].description)
-        assertEquals(expectedDeadline, tasks[0].deadline)
+        val actual = tasks[0]
+        assertEquals(expectedDescription, actual.description)
+        assertEquals(expectedDeadline, actual.deadline)
+        assertEquals(expectedComplete, actual.complete)
     }
 
     @Test
     fun getTasksThenReturnsTasks() {
         // Given
         val tasks = listOf(
-            Task(null, "task-1", yesterday),
-            Task(null, "task-2", today),
-            Task(null, "task-3", tomorrow),
+            Task(null, "task-1", yesterday, true),
+            Task(null, "task-2", today, false),
+            Task(null, "task-3", tomorrow, false),
         )
         tasks.forEach { task -> getTaskDAO().createTask(task) }
 
@@ -80,6 +85,7 @@ class TaskDAOTest {
         tasks.zip(actual).forEach { (expected, actual) ->
             assertEquals(expected.description, actual.description)
             assertEquals(expected.deadline, actual.deadline)
+            assertEquals(expected.complete, actual.complete)
         }
     }
 
@@ -87,9 +93,9 @@ class TaskDAOTest {
     fun getTasksThenReturnsTasksWithDeadlineBeforeNow() {
         // Given
         val tasks = listOf(
-            Task(null, "task-1", yesterday),
-            Task(null, "task-2", today),
-            Task(null, "task-3", tomorrow),
+            Task(null, "task-1", yesterday, false),
+            Task(null, "task-2", today, false),
+            Task(null, "task-3", tomorrow, false),
         )
         tasks.forEach { task -> getTaskDAO().createTask(task) }
 
@@ -101,6 +107,7 @@ class TaskDAOTest {
         tasks.zip(actual).forEach { (expected, actual) ->
             assertEquals(expected.description, actual.description)
             assertEquals(expected.deadline, actual.deadline)
+            assertEquals(expected.complete, actual.complete)
         }
     }
 

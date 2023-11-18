@@ -2,7 +2,7 @@
 import React from 'react';
 import SemanticDatepicker from 'react-semantic-ui-datepickers';
 import 'react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css';
-import { Button, Form, Modal } from 'semantic-ui-react';
+import { Button, Checkbox, Form, Modal } from 'semantic-ui-react';
 
 const Task = (props) => {
 
@@ -26,6 +26,12 @@ const Task = (props) => {
                 <SemanticDatepicker
                     value={new Date(task.deadline)}
                     onChange={(e, data) => onChangeProperty('deadline', data.value)} />
+            </Form.Field>
+            <Form.Field>
+                <label>Complete</label>
+                <Checkbox
+                    checked={task.complete}
+                    onChange={(e, data) => onChangeProperty('complete', data.checked)} />
             </Form.Field>
             <div />
         </Form>

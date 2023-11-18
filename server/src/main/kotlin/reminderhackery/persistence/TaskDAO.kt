@@ -25,14 +25,14 @@ class TaskDAO(private val name: String) {
         return using(sessionOf(HikariCP.dataSource(name))) { session ->
             val sql = """
                 INSERT INTO tasks
-                  (id, description, deadline)
+                  (id, description, deadline, complete)
                 VALUES
-                  (?, ?, ?)
+                  (?, ?, ?, ?)
             """.trimIndent()
 
-            val (_, description, deadline) = task
+            val (_, description, deadline, complete) = task
 
-            session.run(queryOf(sql, id, description, deadline.toOffsetDateTime()).asUpdate)
+            session.run(queryOf(sql, id, description, deadline.toOffsetDateTime(), complete).asUpdate)
 
             logger.info("Created task $task with ID $id")
 
@@ -44,14 +44,14 @@ class TaskDAO(private val name: String) {
         return using(sessionOf(HikariCP.dataSource(name))) { session ->
             val sql = """
                 UPDATE tasks
-                  SET description = ?, deadline = ?
+                  SET description = ?, deadline = ?, complete = ?
                 WHERE 
                   id = ?
             """.trimIndent()
 
-            val (id, description, deadline) = task
+            val (id, description, deadline, complete) = task
 
-            session.run(queryOf(sql, description, deadline.toOffsetDateTime(), id).asUpdate)
+            session.run(queryOf(sql, description, deadline.toOffsetDateTime(), complete, id).asUpdate)
 
             logger.info("Update task $task")
 
@@ -89,7 +89,8 @@ class TaskDAO(private val name: String) {
         return Task(
             row.string("id"),
             row.string("description"),
-            row.offsetDateTime("deadline").atZoneSameInstant(ZoneOffset.UTC)
+            row.offsetDateTime("deadline").atZoneSameInstant(ZoneOffset.UTC),
+            row.boolean("complete")
         )
     }
 }

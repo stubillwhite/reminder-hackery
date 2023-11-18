@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, ButtonGroup, Card } from 'semantic-ui-react';
+import { Button, Icon, ButtonGroup, Card } from 'semantic-ui-react';
 import { createTask, getAllTasks, getDueTasks, updateTask } from '../../apis/Client';
 import TaskEditor from '../../components/TaskEditor';
 
@@ -10,13 +10,17 @@ const TaskList = (props) => {
     }
 
     return props.tasks.map(task => {
-        const formatDate = (date) => new Date(date).toLocaleDateString('en-GB')
+        const formatDate = (date) => new Date(date).toLocaleDateString('en-GB');
+        const completeIcon = task.complete ? 'check' : 'x';
+        const completeText = task.complete ? 'Done' : 'Not done';
 
         return (
             <Card key={task.id}>
-                <Card.Content>
-                    <Card.Header onClick={() => onSelectTask(task)}>{task.description}</Card.Header>
-                    <Card.Content onClick={() => onSelectTask(task)}>{formatDate(task.deadline)}</Card.Content>
+                <Card.Content onClick={() => onSelectTask(task)} >
+                    <Card.Header>{task.description}</Card.Header>
+                    <Card.Content>{formatDate(task.deadline)}</Card.Content>
+                    <Icon name={completeIcon} />
+                    {completeText}
                 </Card.Content>
             </Card>
         );
@@ -25,7 +29,7 @@ const TaskList = (props) => {
 
 const TasksPage = () => {
 
-    const blankTask = { id: null, description: '', deadline: new Date() };
+    const blankTask = { id: null, description: '', deadline: new Date(), complete: false };
 
     const TaskFilter = {
         All: 'All',
